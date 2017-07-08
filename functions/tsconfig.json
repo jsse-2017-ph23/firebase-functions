@@ -3,7 +3,6 @@
     "lib": ["es6", "es2015.promise"],
     "module": "commonjs",
     "noImplicitAny": false,
-    "outDir": "",
     "sourceMap": true,
     "target": "es2015",
     "typeRoots": [
@@ -11,7 +10,6 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "spec/**/*.ts"
+    "src/**/*.ts"
   ]
 }

@@ -2,16 +2,19 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "private": true,
+  "main": "src/index.js",
   "scripts": {
+    "clean": "del src/**/*.js src/**/*.js.map",
     "build": "tsc",
     "watch": "tsc --watch",
-    "deploy": "tsc && firebase deploy --only functions"
+    "deploy": "npm run clean && npm run build && firebase deploy --only functions"
   },
   "dependencies": {
     "firebase-admin": "~4.2.1",
     "firebase-functions": "^0.5.7"
   },
   "devDependencies": {
+    "del-cli": "1.1.0",
     "typescript": "2.4.1"
   }
 }
