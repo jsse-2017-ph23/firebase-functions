@@ -60,3 +60,6 @@ typings/
 # Intellij IDEA
 .idea/
 
+# ignore generated JavaScript files
+functions/**/*.js
+functions/**/*.js.map
