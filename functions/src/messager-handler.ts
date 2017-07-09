@@ -8,5 +8,6 @@ export async function messagerHandler(newStatus: string, fcmTokens: string[], me
     }
   }
 
+  console.log('Will send cloud message to following clients:', fcmTokens)
   await messaging.sendToDevice(fcmTokens, payload)
 }

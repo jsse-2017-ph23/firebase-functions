@@ -8,6 +8,7 @@ export async function selectFcmTokens(database: admin.database.Database): Promis
   users.forEach(user => {
     const fcmToken = user.child('fcmToken')
     if (fcmToken) {
+      console.log('Got token:', fcmToken)
       result.push(fcmToken)
     }
     return false // TS definition requires boolean to be returned.
