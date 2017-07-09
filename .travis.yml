@@ -15,9 +15,13 @@ before_install:
 install:
  - yarn
 
-before_script:
- - cd functions
-
 script:
  - npm run build
- - npm run deploy -- --token $FIREBASE_TOKEN
+
+deploy:
+ - provider: firebase
+   skip_cleanup: true
+   token:
+     secure: $FIREBASE_TOKEN
+   on:
+     branch: master
