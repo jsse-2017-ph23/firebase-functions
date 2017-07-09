@@ -1,5 +1,5 @@
 # firebase-functions
-[![Travis](https://img.shields.io/travis/jsse-2017-ph23/firebase-functions.svg?style=flat-square)](https://github.com/jsse-2017-ph23/firebase-functions)
+[![Travis](https://img.shields.io/travis/jsse-2017-ph23/firebase-functions.svg?style=flat-square)](https://travis-ci.org/jsse-2017-ph23/firebase-functions)
 
 Firebase functions to be hosted
 
