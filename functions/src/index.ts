@@ -1,10 +1,13 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import * as storage from '@google-cloud/storage'
 import {logWriterHandler} from './log-writer-handler'
 import {selectFcmTokens} from './select-fcm-tokens'
 import {messagerHandler} from './messager-handler'
 import {imageDeleteHandler} from './image-delete-handler'
 import {imageCreateHandler} from './image-create-handler'
+import {listOldImages} from './list-old-images'
+import {storageCleaner} from "./storage-cleaner"
 
 admin.initializeApp({
   ...functions.config().firebase,
@@ -59,5 +62,7 @@ export const imageSyncer = functions.storage.object().onChange(async event => {
  * Firebase storage.
  */
 export const imagesPurger = functions.pubsub.topic('hourly-tick').onPublish(async event => {
-
+  const files = await listOldImages(admin.database())
+  console.log('Going to remove following files:', files)
+  await storageCleaner(files, storage())
 })
