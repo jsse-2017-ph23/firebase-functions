@@ -4,7 +4,8 @@ export async function messagerHandler(newStatus: string, fcmTokens: string[], me
   const payload = {
     notification: {
       title: 'Mailbox status changed',
-      body: logMessageMap(newStatus)
+      body: logMessageMap(newStatus),
+      clickAction: 'https://jsse-2017.firebaseapp.com/'
     }
   }
 
