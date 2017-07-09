@@ -8,6 +8,8 @@ import {imageDeleteHandler} from './image-delete-handler'
 import {imageCreateHandler} from './image-create-handler'
 import {listOldImages} from './list-old-images'
 import {storageCleaner} from "./storage-cleaner"
+import {listOldLogs} from './list-old-logs'
+import {logsCleaner} from './logsCleaner'
 
 admin.initializeApp({
   ...functions.config().firebase,
@@ -65,4 +67,9 @@ export const imagesPurger = functions.pubsub.topic('hourly-tick').onPublish(asyn
   const files = await listOldImages(admin.database())
   console.log('Going to remove following files:', files)
   await storageCleaner(files, storage())
+})
+
+export const logsPurger = functions.pubsub.topic('hourly-tick').onPublish(async event => {
+  const logs = await listOldLogs(admin.database())
+  await logsCleaner(logs)
 })
