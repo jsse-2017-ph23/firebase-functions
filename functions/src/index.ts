@@ -69,6 +69,9 @@ export const imagesPurger = functions.pubsub.topic('hourly-tick').onPublish(asyn
   await storageCleaner(files, storage())
 })
 
+/**
+ * This function will be triggered hourly and remove old logs from Firebase realtime database
+ */
 export const logsPurger = functions.pubsub.topic('hourly-tick').onPublish(async event => {
   const logs = await listOldLogs(admin.database())
   await logsCleaner(logs)
