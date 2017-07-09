@@ -6,7 +6,7 @@ export async function selectFcmTokens(database: admin.database.Database): Promis
   const users: admin.database.DataSnapshot = await database.ref('/users').once('value')
   const result = []
   users.forEach(user => {
-    const fcmToken = user.child('fcmToken')
+    const fcmToken = user.child('fcmToken').val()
     if (fcmToken) {
       console.log('Got token:', fcmToken)
       result.push(fcmToken)
