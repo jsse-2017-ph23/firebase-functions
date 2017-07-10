@@ -46,16 +46,16 @@ export const messager = functions.database.ref('/status').onWrite(async event =>
  * Sync includes deletion and addition of object.
  */
 export const imageSyncer = functions.storage.object().onChange(async event => {
-  const {metadata, resourceState, name} = event.data
+  const {metadata, resourceState, name, mediaLink} = event.data
   if (!name.startsWith('webcam-images/')) {
     // Not inside of webcam-images path. Ignore the file.
     return
   }
 
   if (resourceState === 'not_exists') {
-    await imageDeleteHandler(name, admin.database())
+    await imageDeleteHandler(mediaLink, admin.database())
   } else {
-    await imageCreateHandler(name, metadata, admin.database())
+    await imageCreateHandler(mediaLink, metadata, admin.database())
   }
 })
 
