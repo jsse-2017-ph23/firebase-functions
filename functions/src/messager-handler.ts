@@ -3,9 +3,9 @@ import {logMessageMap} from './log-message-map'
 export async function messagerHandler(newStatus: string, fcmTokens: string[], messaging: admin.messaging.Messaging) {
   const payload = {
     notification: {
-      title: 'Mailbox status changed',
       body: logMessageMap(newStatus),
-      clickAction: 'https://jsse-2017.firebaseapp.com/'
+      clickAction: 'https://jsse-2017.firebaseapp.com/',
+      title: 'Mailbox status changed'
     }
   }
 

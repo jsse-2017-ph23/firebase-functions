@@ -7,7 +7,7 @@ import {messagerHandler} from './messager-handler'
 import {imageDeleteHandler} from './image-delete-handler'
 import {imageCreateHandler} from './image-create-handler'
 import {listOldImages} from './list-old-images'
-import {storageCleaner} from "./storage-cleaner"
+import {storageCleaner} from './storage-cleaner'
 import {listOldLogs} from './list-old-logs'
 import {logsCleaner} from './logs-cleaner'
 

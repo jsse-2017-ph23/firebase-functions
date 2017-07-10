@@ -16,7 +16,7 @@ export async function imageCreateHandler(fileName: string, metadata: ImageMeta |
   const time = getTime(metadata)
 
   await database.ref('/footage').push({
-    time,
-    path: fileName
+    path: fileName,
+    time
   })
 }

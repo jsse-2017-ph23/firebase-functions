@@ -8,7 +8,7 @@ export async function imageDeleteHandler(fileName: string, database: admin.datab
     return
   }
 
-  const removePrmoises: Promise<any>[] = []
+  const removePrmoises: Array<Promise<any>> = []
   dbEntries.forEach(entry => {
     removePrmoises.push(entry.ref.remove())
   })
