@@ -1,5 +1,5 @@
-// At least keep images for 12 hours
-const maxAliveTime = 12 * 3600 * 1000
+// At least keep images for 3 days
+const maxAliveTime = 3 * 24 * 3600 * 1000
 
 /**
  * List webcam images from firebase database and filter the list.
