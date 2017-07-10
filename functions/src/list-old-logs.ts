@@ -13,7 +13,7 @@ export async function listOldLogs(database: admin.database.Database): Promise<ad
     const {time} = log.val()
     const delta = now - time
     if (delta > maxAliveTime) {
-      result.push(log.ref())
+      result.push(log.ref)
     }
   })
   return result
