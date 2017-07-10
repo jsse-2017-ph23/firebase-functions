@@ -9,7 +9,7 @@ import {imageCreateHandler} from './image-create-handler'
 import {listOldImages} from './list-old-images'
 import {storageCleaner} from "./storage-cleaner"
 import {listOldLogs} from './list-old-logs'
-import {logsCleaner} from './logsCleaner'
+import {logsCleaner} from './logs-cleaner'
 
 admin.initializeApp({
   ...functions.config().firebase,
