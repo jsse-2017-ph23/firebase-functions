@@ -55,7 +55,7 @@ export const imageSyncer = functions.storage.object().onChange(async event => {
   if (resourceState === 'not_exists') {
     await imageDeleteHandler(name, admin.database())
   } else {
-    await imageCreateHandler(name, metadata, admin.database(), storage())
+    await imageCreateHandler(name, metadata, admin.database())
   }
 })
 
