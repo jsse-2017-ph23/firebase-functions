@@ -47,7 +47,7 @@ export const messager = functions.database.ref('/status').onWrite(async event =>
  */
 export const imageSyncer = functions.storage.object().onChange(async event => {
   const {metadata, resourceState, name} = event.data
-  if (!name.startsWith('/webcam-images/')) {
+  if (!name.startsWith('webcam-images/')) {
     // Not inside of webcam-images path. Ignore the file.
     return
   }
