@@ -49,12 +49,15 @@ export const imageSyncer = functions.storage.object().onChange(async event => {
   const {metadata, resourceState, name} = event.data
   if (!name.startsWith('webcam-images/')) {
     // Not inside of webcam-images path. Ignore the file.
+    console.log('New object is not in observing path, ignoring.', name)
     return
   }
 
   if (resourceState === 'not_exists') {
+    console.log('Image deleted. Name:', name)
     await imageDeleteHandler(name, admin.database())
   } else {
+    console.log('New image created. Name:', name)
     await imageCreateHandler(name, metadata, admin.database())
   }
 })
