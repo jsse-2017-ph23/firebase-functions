@@ -17,6 +17,6 @@ export async function imageCreateHandler(name: string, metadata: ImageMeta | nul
 
   await database.ref('/footage').push({
     path: name,
-    time,
+    time: +time,
   })
 }
