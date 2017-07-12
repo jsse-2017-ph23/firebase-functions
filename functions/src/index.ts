@@ -10,7 +10,7 @@ import {listOldImages} from './list-old-images'
 import {storageCleaner} from './storage-cleaner'
 import {listOldLogs} from './list-old-logs'
 import {logsCleaner} from './logs-cleaner'
-import {logMessageMap} from "./log-message-map";
+import {logMessageMap} from './log-message-map'
 
 admin.initializeApp({
   ...functions.config().firebase,
