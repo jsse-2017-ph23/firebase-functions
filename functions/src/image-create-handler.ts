@@ -15,8 +15,15 @@ export async function imageCreateHandler(name: string, metadata: ImageMeta | nul
   }
   const time = getTime(metadata)
 
-  await database.ref('/footage').push({
-    path: name,
-    time: +time,
-  })
+  // Check for redundant write
+  const repeated = await database.ref('/footage').orderByChild('path').equalTo(name).once('value')
+
+  if (repeated.val()) {
+    console.warn('Footage already in database. Aborting writing')
+  } else {
+    await database.ref('/footage').push({
+      path: name,
+      time: +time,
+    })
+  }
 }
