@@ -8,12 +8,8 @@ export function logMessageMap(status?: string) {
       return 'Status has been deleted. This should not happen!'
     case 'offline':
       return 'Mail box went offline.'
-    case 'boot':
-      return 'Mail box is booting.'
-    case 'noMail':
-      return 'Mail has been retrieved.'
-    case 'gotMail':
-      return 'New mail was deposited.'
+    case 'online':
+      return 'Mail box went online.'
     default:
       return `Unknown status: ${status}`
   }
