@@ -3,13 +3,14 @@ import * as admin from 'firebase-admin'
 import * as storage from '@google-cloud/storage'
 import {logWriterHandler} from './log-writer-handler'
 import {selectFcmTokens} from './select-fcm-tokens'
-import {messagerHandler} from './messager-handler'
+import {sendCloudMessage} from './send-cloud-message'
 import {imageDeleteHandler} from './image-delete-handler'
 import {imageCreateHandler} from './image-create-handler'
 import {listOldImages} from './list-old-images'
 import {storageCleaner} from './storage-cleaner'
 import {listOldLogs} from './list-old-logs'
 import {logsCleaner} from './logs-cleaner'
+import {logMessageMap} from "./log-message-map";
 
 admin.initializeApp({
   ...functions.config().firebase,
@@ -32,10 +33,27 @@ export const logWriter = functions.database.ref('/status').onWrite(async event =
  * This function is responsible to monitor status change in realtime database
  * and push notification to all clients.
  */
-export const messager = functions.database.ref('/status').onWrite(async event => {
+export const statusMessager = functions.database.ref('/status').onWrite(async event => {
   const tokens = await selectFcmTokens(admin.database())
   const newStatus = event.data.val()
-  await messagerHandler(newStatus, tokens, admin.messaging())
+  const title = 'Mailbox status changed'
+  const body = logMessageMap(newStatus)
+  await sendCloudMessage(title, body, tokens, admin.messaging())
+})
+
+/**
+ * This function is responsible to monitor mail count change in realtime database
+ * and push notification to all clients
+ */
+export const mailCountMessager = functions.database.ref('/mailCount').onWrite(async event => {
+  const tokens = await selectFcmTokens(admin.database())
+  const mailCount = event.data.val()
+  if (mailCount > 0) {
+    // Reset can only be done on web client. No notification will be sent if that is a reset
+    const title = 'You have got new mail'
+    const body = `Your mailbox now have ${mailCount} mails.`
+    await sendCloudMessage(title, body, tokens, admin.messaging())
+  }
 })
 
 /**
