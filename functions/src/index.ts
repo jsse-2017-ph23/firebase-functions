@@ -11,6 +11,7 @@ import {storageCleaner} from './storage-cleaner'
 import {listOldLogs} from './list-old-logs'
 import {logsCleaner} from './logs-cleaner'
 import {logMessageMap} from './log-message-map'
+import {WEBCAM_BUCKET, WEBCAM_FOLDER} from './constants'
 
 admin.initializeApp({
   ...functions.config().firebase,
@@ -63,11 +64,15 @@ export const mailCountMessager = functions.database.ref('/mailCount').onWrite(as
  * Because there is no way (by permission system) to change entry in database.
  * Sync includes deletion and addition of object.
  */
-export const imageSyncer = functions.storage.object().onChange(async event => {
-  const {metadata, resourceState, name} = event.data
-  if (!name.startsWith('webcam-images/')) {
-    // Not inside of webcam-images path. Ignore the file.
+export const imageSyncer = functions.storage.bucket(WEBCAM_BUCKET).object().onChange(async event => {
+  const {metadata, resourceState, name, metageneration} = event.data
+  if (!name.startsWith(WEBCAM_FOLDER)) {
     console.log('New object is not in observing path, ignoring.', name)
+    return
+  }
+
+  if (resourceState === 'exists' && metageneration > 1) {
+    // This is a metadata change event.
     return
   }
 
