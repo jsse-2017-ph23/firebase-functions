@@ -1,4 +1,4 @@
-const bucketName = 'jsse-2017.appspot.com'
+const bucketName = 'turbo-chainsaw'
 
 /**
  * Remove blobs from cloud storage by given paths.
