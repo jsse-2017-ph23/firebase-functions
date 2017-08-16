@@ -12,6 +12,7 @@ import {listOldLogs} from './list-old-logs'
 import {logsCleaner} from './logs-cleaner'
 import {logMessageMap} from './log-message-map'
 import {WEBCAM_BUCKET, WEBCAM_FOLDER} from './constants'
+import {mailLogHandler} from './mail-log-handler'
 
 admin.initializeApp({
   ...functions.config().firebase,
@@ -23,11 +24,22 @@ admin.initializeApp({
 /**
  * This function is responsible to monitor status change in realtime database
  * and append appropriate log to realtime database.
+ * This does NOT handle have mail status change.
  */
 export const logWriter = functions.database.ref('/status').onWrite(async event => {
   const now = new Date()
   const newStatus = event.data.val()
   await logWriterHandler(newStatus, now, admin.database())
+})
+
+/**
+ * This function handles haveMail path change from realtime database
+ * and append change log to realtime database.
+ */
+export const mailLogWriter = functions.database.ref('/haveMail').onWrite(async event => {
+  const now = new Date()
+  const newStatus: boolean = event.data.val()
+  await mailLogHandler(newStatus, now, admin.database())
 })
 
 /**
@@ -46,15 +58,13 @@ export const statusMessager = functions.database.ref('/status').onWrite(async ev
  * This function is responsible to monitor mail count change in realtime database
  * and push notification to all clients
  */
-export const mailCountMessager = functions.database.ref('/mailCount').onWrite(async event => {
+export const mailCountMessager = functions.database.ref('/haveMail').onWrite(async event => {
   const tokens = await selectFcmTokens(admin.database())
-  const mailCount = event.data.val()
-  if (mailCount > 0) {
-    // Reset can only be done on web client. No notification will be sent if that is a reset
-    const title = 'You have got new mail'
-    const body = `Your mailbox now have ${mailCount} mails.`
-    await sendCloudMessage(title, body, tokens, admin.messaging())
-  }
+  const mailCount: boolean = event.data.val()
+
+  const title = 'Mail status has updated'
+  const body = mailCount ? 'You have got mail' : 'Your mail have been retrieved'
+  await sendCloudMessage(title, body, tokens, admin.messaging()))
 })
 
 /**
