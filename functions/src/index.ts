@@ -64,7 +64,7 @@ export const mailCountMessager = functions.database.ref('/haveMail').onWrite(asy
 
   const title = 'Mail status has updated'
   const body = mailCount ? 'You have got mail' : 'Your mail have been retrieved'
-  await sendCloudMessage(title, body, tokens, admin.messaging()))
+  await sendCloudMessage(title, body, tokens, admin.messaging())
 })
 
 /**
