@@ -11,13 +11,13 @@
     "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
-    "@google-cloud/storage": "1.2.0",
-    "firebase-admin": "5.0.0",
-    "firebase-functions": "0.5.9"
+    "@google-cloud/storage": "1.2.1",
+    "firebase-admin": "5.2.1",
+    "firebase-functions": "0.6.2"
   },
   "devDependencies": {
     "del-cli": "1.1.0",
-    "tslint": "5.5.0",
-    "typescript": "2.4.1"
+    "tslint": "5.6.0",
+    "typescript": "2.4.2"
   }
 }
