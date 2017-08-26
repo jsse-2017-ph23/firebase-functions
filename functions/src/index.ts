@@ -81,18 +81,19 @@ export const imageSyncer = functions.storage.bucket(WEBCAM_BUCKET).object().onCh
     return
   }
 
+  if (resourceState === 'not_exists') {
+    console.log('Image deleted. Name:', name)
+    await imageDeleteHandler(name, admin.database())
+    return
+  }
+
   if (resourceState === 'exists' && metageneration > 1) {
     // This is a metadata change event.
     return
   }
 
-  if (resourceState === 'not_exists') {
-    console.log('Image deleted. Name:', name)
-    await imageDeleteHandler(name, admin.database())
-  } else {
-    console.log('New image created. Name:', name)
-    await imageCreateHandler(name, metadata, admin.database())
-  }
+  console.log('New image created. Name:', name)
+  await imageCreateHandler(name, metadata, admin.database())
 })
 
 /**
