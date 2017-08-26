@@ -9,5 +9,6 @@ export async function storageCleaner(paths: string[], storage: any) {
   const deletePromises = paths.map(path => (
     bucket.file(path).delete
   ))
-  await Promise.all(deletePromises)
+  const res = await Promise.all(deletePromises)
+  console.log('All given images removed from cloud storage. Result:', res)
 }
