@@ -30,7 +30,7 @@ export async function listOldLogs(database: admin.database.Database): Promise<ad
 
   if (aliveLogs.length > LOG_MAX_ENTRIES) {
     // Sort, first is oldest and last is latest
-    aliveLogs.sort((a, b) => a.time.getTime() - b.time.getTime())
+    aliveLogs.sort((a, b) => b.time.getTime() - a.time.getTime())
     const excess = aliveLogs.slice(0, aliveLogs.length - LOG_MAX_ENTRIES).map(a => a.ref)
     removeLogs.push(...excess)
   }
